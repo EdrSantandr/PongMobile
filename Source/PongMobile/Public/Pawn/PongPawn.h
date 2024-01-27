@@ -18,7 +18,7 @@ public:
 	
 	APongPawn();
 
-	FORCEINLINE float GetSpeed() { return BaseSpeed; }
+	FORCEINLINE float GetSpeed() const { return BaseSpeed; }
 
 	UFUNCTION(BlueprintCallable)
 	void SetSpeed(float NewSpeed) { BaseSpeed = NewSpeed; }
@@ -26,9 +26,9 @@ public:
 protected:
 	
 	virtual void BeginPlay() override;
-	
+
 	UPROPERTY(EditAnywhere, Category="PongPawn")
-	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
+	TObjectPtr<UBoxComponent> BoxComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category="PongPawn")
 	float BaseSpeed = 200.f;
