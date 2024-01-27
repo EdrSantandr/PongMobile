@@ -4,6 +4,9 @@
 #include "Player/PongPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "GameFramework/DefaultPawn.h"
+#include "GameFramework/PawnMovementComponent.h"
+#include "Pawn/PongPawn.h"
 
 APongPlayerController::APongPlayerController()
 {
@@ -38,5 +41,14 @@ void APongPlayerController::Move(const FInputActionValue& InputActionValue)
 {
 	const FVector2d InputAxisVector = InputActionValue.Get<FVector2d>();
 	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0.f, Rotation.Yaw,0.f);
 	
+	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	
+	if (APongPawn* ControlledPawn = GetPawn<APongPawn>())
+	{
+		ControlledPawn->AddMovementInput(ForwardDirection * ControlledPawn->GetSpeed(), InputAxisVector.Y);
+		ControlledPawn->AddMovementInput(RightDirection * ControlledPawn->GetSpeed(), InputAxisVector.X);
+	}
 }
