@@ -7,6 +7,7 @@
 #include "GameFramework/Pawn.h"
 #include "PongPawn.generated.h"
 
+class UCameraComponent;
 class UBoxComponent;
 
 UCLASS(Abstract)
@@ -22,6 +23,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetSpeed(float NewSpeed) { BaseSpeed = NewSpeed; }
+
+	virtual void PossessedBy(AController* NewController) override;
 
 protected:
 	

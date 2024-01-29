@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "PongCharacter.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
 class PONGMOBILE_API APongCharacter : public ACharacter
 {
@@ -16,9 +18,20 @@ public:
 	APongCharacter();
 
 protected:
-	
+
+public:
+
 	virtual void BeginPlay() override;
 
-public:	
+	UFUNCTION(BlueprintCallable)
+	float GetSpeed(){ return Speed; }
 
+	UPROPERTY(EditDefaultsOnly, Category="PongCharacter")
+	float Speed = 200.f;
+
+	UPROPERTY(EditDefaultsOnly, Category="PongCharacter")
+	TObjectPtr<UBoxComponent> BoxComponent;
+	
+	UPROPERTY(EditDefaultsOnly, Category="PongCharacter")
+	TObjectPtr<UStaticMeshComponent> MeshComponent;
 };

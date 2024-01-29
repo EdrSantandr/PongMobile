@@ -4,6 +4,7 @@
 #include "Player/PongPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Character/PongCharacter.h"
 #include "GameFramework/DefaultPawn.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "Pawn/PongPawn.h"
@@ -46,9 +47,9 @@ void APongPlayerController::Move(const FInputActionValue& InputActionValue)
 	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	
-	if (APongPawn* ControlledPawn = GetPawn<APongPawn>())
+	if (APongCharacter* PongCharacter = Cast<APongCharacter>(GetCharacter()))
 	{
-		ControlledPawn->AddMovementInput(ForwardDirection * ControlledPawn->GetSpeed(), InputAxisVector.Y);
-		ControlledPawn->AddMovementInput(RightDirection * ControlledPawn->GetSpeed(), InputAxisVector.X);
+		PongCharacter->AddMovementInput(ForwardDirection * PongCharacter->GetSpeed(), InputAxisVector.Y);
+		PongCharacter->AddMovementInput(RightDirection * PongCharacter->GetSpeed(), InputAxisVector.X);
 	}
 }

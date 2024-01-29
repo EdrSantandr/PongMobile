@@ -3,10 +3,10 @@
 
 #include "Pawn/PongPawn.h"
 
+#include "Camera/CameraComponent.h"
 #include "Components/BoxComponent.h"
-#include "Components/SphereComponent.h"
-#include "GameFramework/FloatingPawnMovement.h"
-#include "GameFramework/PawnMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Player/PongPlayerState.h"
 #include "PongMobile/PongMobile.h"
 
 APongPawn::APongPawn()
@@ -23,10 +23,23 @@ APongPawn::APongPawn()
 	BoxComponent->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Overlap);
 	BoxComponent->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	
+}
 
+void APongPawn::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	if (APongPlayerState* PongPlayerState = Cast<APongPlayerState>(GetPlayerState()))
+	{
+		if (APlayerController* PlayerController = Cast<APlayerController>(NewController))
+		{
+			AActor* PongCamera = PongPlayerState->SpawnPlayerCameraActor();
+			PlayerController->SetViewTargetWithBlend(PongCamera,0.f);
+		}
+	}
 }
 
 void APongPawn::BeginPlay()
 {
 	Super::BeginPlay();
+	
 }
