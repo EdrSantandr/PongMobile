@@ -4,15 +4,13 @@
 #include "Character/PongCharacter.h"
 
 #include "Components/BoxComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "Player/PongPlayerState.h"
+#include "PongMobile/PongMobile.h"
 
 
 APongCharacter::APongCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	UCapsuleComponent* CharacterCapsule = GetCapsuleComponent();
-	//CharacterCapsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("MeshComponent");
 	MeshComponent->SetupAttachment(GetRootComponent());
@@ -21,7 +19,7 @@ APongCharacter::APongCharacter()
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>("BoxComponent");
 	BoxComponent->SetupAttachment(MeshComponent);
 	BoxComponent->SetCollisionResponseToChannels(ECR_Ignore);
-	BoxComponent->SetCollisionResponseToChannel(ECC_EngineTraceChannel1,ECR_Overlap);
+	BoxComponent->SetCollisionResponseToChannel(ECC_Pong,ECR_Overlap);
 }
 
 void APongCharacter::BeginPlay()

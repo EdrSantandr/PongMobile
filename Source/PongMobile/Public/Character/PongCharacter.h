@@ -34,4 +34,10 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, Category="PongCharacter")
 	TObjectPtr<UStaticMeshComponent> MeshComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category="PongCharacter")
+		float CharacterImpulse = 10000.f;
+
+	UFUNCTION()
+	float GetCharacterImpulse(){ return CharacterImpulse; };
 };
